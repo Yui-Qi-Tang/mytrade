@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+
+option go_package="./protoc";
+
+service Trader {
+  rpc Create (Order) returns (OrderReply) {}
+  rpc Get (GetOrder) returns (OrderReply) {}
+}
+
+message Order {
+  int64 price  = 1;
+  int32 priceMode  = 2;
+  int64 quantity  = 3;
+  int32 side  = 4;
+}
+
+message OrderReply {
+  string ID = 1;
+  int64 price = 2;
+  string priceMode = 3;
+  int64 quantity = 4;
+  string side = 5;
+  int64 timestamp = 6; // timestamp
+  string status = 7; // status of trade
+}
+
+
+message GetOrder {
+  string id = 1;
+}
