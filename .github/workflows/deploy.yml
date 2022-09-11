@@ -17,6 +17,12 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v1
 
+      - name: Vulnerability detection
+        run: |
+          go install golang.org/x/vuln/cmd/govulncheck@latest
+          export PATH="$PATH:$(go env GOPATH)/bin"
+          govulncheck ./...
+
       - name: test
         run: |
           go test ./...
