@@ -70,5 +70,6 @@ func (o OrderStatus) String() string {
 		"completed",
 		"pending",
 		"canceled",
+		"unknown",
 	}[o]
 }
