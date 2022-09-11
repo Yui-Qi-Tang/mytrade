@@ -1,0 +1,26 @@
+name: mytrade test
+on:
+  push:
+    branches:
+      - master
+      - develop
+      - feature/*
+jobs:
+  lint:
+    strategy:
+      matrix:
+        platform: [ubuntu-latest]
+    runs-on: ${{ matrix.platform }}
+    container: golang:1.18.5
+    steps:
+
+      - name: Check out code
+        uses: actions/checkout@v1
+
+      - name: test
+        run: |
+          go test ./...
+          
+      - name: test race
+        run: |
+          go test ./... -race
