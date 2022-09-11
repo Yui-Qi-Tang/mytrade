@@ -1,0 +1,32 @@
+name: mytrade test
+on:
+  push:
+    branches:
+      - master
+      - develop
+      - feature/*
+jobs:
+  lint:
+    strategy:
+      matrix:
+        platform: [ubuntu-latest]
+    runs-on: ${{ matrix.platform }}
+    container: golang:1.18.5
+    steps:
+
+      - name: Check out code
+        uses: actions/checkout@v1
+
+      - name: Vulnerability detection
+        run: |
+          go install golang.org/x/vuln/cmd/govulncheck@latest
+          export PATH="$PATH:$(go env GOPATH)/bin"
+          govulncheck ./...
+
+      - name: test
+        run: |
+          go test ./...
+          
+      - name: test race
+        run: |
+          go test ./... -race
